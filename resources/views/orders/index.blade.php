@@ -2,35 +2,32 @@
 
 @section('content')
 <div class="container">
-    <h1>Liste des paiements</h1>
-    <a href="{{ route('accountant.create') }}" class="btn btn-primary mb-3">Ajouter un paiement</a>
-
-    <table class="table table-bordered">
+    <h1>Orders</h1>
+    <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Create New Order</a>
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Étudiant</th>
-                <th>Montant</th>
-                <th>Méthode de paiement</th>
-                <th>Date</th>
+                <th>Date Commande</th>
+                <th>Date Paiement</th>
+                <th>Date Livraison</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($payments as $payment)
+            @foreach($orders as $order)
             <tr>
-                <td>{{ $payment->id }}</td>
-                <td>{{ $payment->user->name }}</td>
-                <td>{{ $payment->montant }}</td>
-                <td>{{ $payment->payment_type }}</td>
-                <td>{{ $payment->created_at }}</td>
+                <td>{{ $order->id }}</td>
+                <td>{{ $order->date_Commande }}</td>
+                <td>{{ $order->date_Paiement }}</td>
+                <td>{{ $order->date_Livraison }}</td>
                 <td>
-                    <a href="{{ route('accountant.show', $payment->id) }}" class="btn btn-info btn-sm">Voir</a>
-                    <a href="{{ route('accountant.edit', $payment->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                    <form action="{{ route('accountant.destroy', $payment->id) }}" method="POST" style="display: inline-block;">
+                    <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info btn-sm">View</a>
+                    <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
             </tr>

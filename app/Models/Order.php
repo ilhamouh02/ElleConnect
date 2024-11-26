@@ -6,9 +6,13 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+// use Carbon\Carbon;
+// use Illuminate\Database\Eloquent\Collection;
+// use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * Class Order
@@ -30,46 +34,64 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Order extends Model
-{
-	protected $table = 'Elle_orders';
-	protected $primaryKey = 'id_Commande';
-	public $timestamps = false;
 
-	protected $casts = [
-		'date_Commande' => 'datetime',
-		'date_Paiement' => 'datetime',
-		'date_Livraison' => 'datetime'
-	];
+ class Order extends Model
+ {
+	 use HasFactory;
+ 
+	 protected $fillable = [
+		 'date_Commande',
+		 'date_Paiement',
+		 'date_Livraison',
+	 ];
+ }
 
-	protected $fillable = [
-		'date_Commande',
-		'date_Paiement',
-		'date_Livraison',
-		'id_Connexion',
-		'password_Connexion',
-		'id_demande',
-		'id_Paiement',
-		'id_Prise'
-	];
 
-	public function status()
-	{
-		return $this->belongsTo(Status::class, 'id_demande');
-	}
 
-	public function payment_method()
-	{
-		return $this->belongsTo(PaymentMethod::class, 'id_Paiement');
-	}
 
-	public function prise()
-	{
-		return $this->belongsTo(Prise::class, 'id_Prise');
-	}
 
-	public function contenirs()
-	{
-		return $this->hasMany(Contenir::class, 'id_Commande');
-	}
-}
+
+
+// class Order extends Model
+// {
+// 	protected $table = 'Elle_orders';
+// 	protected $primaryKey = 'id_Commande';
+// 	public $timestamps = false;
+
+// 	protected $casts = [
+// 		'date_Commande' => 'datetime',
+// 		'date_Paiement' => 'datetime',
+// 		'date_Livraison' => 'datetime'
+// 	];
+
+// 	protected $fillable = [
+// 		'date_Commande',
+// 		'date_Paiement',
+// 		'date_Livraison',
+// 		'id_Connexion',
+// 		'password_Connexion',
+// 		'id_demande',
+// 		'id_Paiement',
+// 		'id_Prise'
+// 	];
+
+// 	public function status()
+// 	{
+// 		return $this->belongsTo(Status::class, 'id_demande');
+// 	}
+
+// 	public function payment_method()
+// 	{
+// 		return $this->belongsTo(PaymentMethod::class, 'id_Paiement');
+// 	}
+
+// 	public function prise()
+// 	{
+// 		return $this->belongsTo(Prise::class, 'id_Prise');
+// 	}
+
+// 	public function contenirs()
+// 	{
+// 		return $this->hasMany(Contenir::class, 'id_Commande');
+// 	}
+// }

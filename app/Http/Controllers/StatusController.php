@@ -2,63 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// app/Http/Controllers/StatusController.php
+
+namespace App\Http\Controllers;
+
+    use App\Models\Status;
+    use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Afficher la liste des statuts
     public function index()
     {
-        //
+        $statuses = Status::all();
+        return view('statuses.index', compact('statuses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Afficher le formulaire de création d'un statut
     public function create()
     {
-        //
+        return view('statuses.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Enregistrer un nouveau statut
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'demance_Valider' => 'boolean',
+            'demand_en_cours' => 'boolean',
+            'demande_Terminer' => 'boolean',
+        ]);
+
+        Status::create([
+            'label' => $request->label,
+            'demance_Valider' => $request->demance_Valider,
+            'demand_en_cours' => $request->demand_en_cours,
+            'demande_Terminer' => $request->demande_Terminer,
+        ]);
+
+        return redirect()->route('statuses.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Afficher les détails d'un statut
+    public function show(Status $status)
     {
-        //
+        return view('statuses.show', compact('status'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // Afficher le formulaire de modification d'un statut
+    public function edit(Status $status)
     {
-        //
+        return view('statuses.edit', compact('status'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Mettre à jour un statut
+    public function update(Request $request, Status $status)
     {
-        //
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'demance_Valider' => 'boolean',
+            'demand_en_cours' => 'boolean',
+            'demande_Terminer' => 'boolean',
+        ]);
+
+        $status->update([
+            'label' => $request->label,
+            'demance_Valider' => $request->demance_Valider,
+            'demand_en_cours' => $request->demand_en_cours,
+            'demande_Terminer' => $request->demande_Terminer,
+        ]);
+
+        return redirect()->route('statuses.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Supprimer un statut
+    public function destroy(Status $status)
     {
-        //
+        $status->delete();
+        return redirect()->route('statuses.index');
     }
 }
+

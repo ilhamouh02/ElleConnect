@@ -6,7 +6,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,25 +23,32 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Status extends Model
 {
-	protected $table = 'Elle_status';
-	protected $primaryKey = 'id_demande';
-	public $incrementing = false;
-	public $timestamps = false;
+	use HasFactory;
 
-	protected $casts = [
-		'demance_Valider' => 'bool',
-		'demand_en_cours' => 'bool',
-		'demande_Terminer' => 'bool'
-	];
+	// protected $table = 'Elle_status';
+	// protected $primaryKey = 'id_demande';
+	// public $incrementing = false;
+	// public $timestamps = false;
+
+	// protected $casts = [
+	// 	'demance_Valider' => 'bool',
+	// 	'demand_en_cours' => 'bool',
+	// 	'demande_Terminer' => 'bool'
+	// ];
 
 	protected $fillable = [
-		'demance_Valider',
-		'demand_en_cours',
-		'demande_Terminer'
-	];
-
-	public function orders()
-	{
-		return $this->hasMany(Order::class, 'id_demande');
-	}
+        'id_Status',
+        'demance_Valider',
+        'demand_en_cours',
+        'demande_Terminer',
+        'label'
+    ];
+	// public function orders()
+	// {
+	// 	return $this->hasMany(Order::class, 'id_Status');
+	// }
+	// public function orders()
+	// {
+	// 	return $this->hasMany(Order::class, 'id_demande');
+	// }
 }

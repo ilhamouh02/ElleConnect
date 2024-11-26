@@ -6,7 +6,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // Importation du trait HasFactory
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -21,10 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PaymentMethod extends Model
 {
-	protected $table = 'Elle_payment_methods';
-	protected $primaryKey = 'id_Paiement';
-	public $incrementing = false;
-	public $timestamps = false;
+	// protected $table = 'payment_methods';
+	// protected $primaryKey = 'id_Paiement';
+	// public $incrementing = false;
+	// public $timestamps = false;
+
+	use HasFactory;
 
 	protected $fillable = [
 		'payment_type'
