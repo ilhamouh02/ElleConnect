@@ -1,1 +1,3 @@
-<h1 class="logo">Titre du site</h1>
+<header class="header" role="banner">
+    <h1 class="logo"> ElleConnect </h1>
+</header>

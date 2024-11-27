@@ -26,7 +26,8 @@ Route::get('/about', function () {
     return View::make('pages.about');
     });
 
-    Route::get('/status', [StatusController::class, 'index'])->name('status.index');  
+//Route::get('/status', [StatusController::class, 'index'])->name('status.index');  
+
 // Routes pour les ressources (CRUD)
 Route::resource('roles', RoleController::class);
 Route::resource('logements', LogementController::class);

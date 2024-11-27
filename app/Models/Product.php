@@ -6,8 +6,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Collection;
-// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,47 +24,31 @@ use Illuminate\Database\Eloquent\Model;
  */
 
  class Product extends Model
- {
-	 use HasFactory;
- 
-	 // Nom de la table si ce n'est pas celui par défaut
-    #protected $table = 'Products';
+{
+    use HasFactory;
 
-    #protected $primaryKey = 'id_Produit';
+    #protected $table = 'Products';
+    protected $primaryKey = 'id_Produit';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
-        'id_Produit', // L'ID du produit
-        'prix_Produit', // Le prix
-        'visible', // Si le produit est visible
-        'prise', // Si le produit est pris en compte
+        'id_Produit',
+        'prix_Produit',
+        'visible',
+        'prise'
     ];
- }
 
+    protected $casts = [
+        'prix_Produit' => 'float',
+        'visible' => 'boolean',
+        'prise' => 'boolean'
+    ];
 
-
-
-
-// class Product extends Model
-// {
-// 	protected $table = 'Elle_products';
-// 	protected $primaryKey = 'id_Produit';
-// 	public $incrementing = false;
-// 	public $timestamps = false;
-
-// 	protected $casts = [
-// 		'prix_Produit' => 'float',
-// 		'visible' => 'bool',
-// 		'prise' => 'bool'
-// 	];
-
-// 	protected $fillable = [
-// 		'prix_Produit',
-// 		'visible',
-// 		'prise'
-// 	];
-
-// 	public function contenirs()
-// 	{
-// 		return $this->hasMany(Contenir::class, 'id_Produit');
-// 	}
-// }
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'Contenir', 'id_Produit', 'id_Commande')
+                    ->withPivot('prix_Produit', 'nom_Produit');
+    }
+}

@@ -2,63 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contenir;
+use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class ContenirController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $contenirs = Contenir::with(['product', 'order'])->get();
+        return view('contenirs.index', compact('contenirs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $products = Product::all();
+        $orders = Order::all();
+        return view('contenirs.create', compact('products', 'orders'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_Produit' => 'required|exists:Products,id_Produit',
+            'id_Commande' => 'required|exists:orders,id_Commande',
+            'prix_Produit' => 'required|numeric',
+            'nom_Produit' => 'required|string|max:100',
+        ]);
+
+        Contenir::create($request->all());
+
+        return redirect()->route('contenirs.index')->with('success', 'Contenu ajouté avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Contenir $contenir)
     {
-        //
+        return view('contenirs.show', compact('contenir'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Contenir $contenir)
     {
-        //
+        $products = Product::all();
+        $orders = Order::all();
+        return view('contenirs.edit', compact('contenir', 'products', 'orders'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Contenir $contenir)
     {
-        //
+        $request->validate([
+            'prix_Produit' => 'required|numeric',
+            'nom_Produit' => 'required|string|max:100',
+        ]);
+
+        $contenir->update($request->all());
+
+        return redirect()->route('contenirs.index')->with('success', 'Contenu mis à jour avec succès.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Contenir $contenir)
     {
-        //
+        $contenir->delete();
+
+        return redirect()->route('contenirs.index')->with('success', 'Contenu supprimé avec succès.');
     }
 }

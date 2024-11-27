@@ -1,93 +1,94 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-
 /**
  * Class User
  * 
- * @property int $id
- * @property string $name
- * @property string $email
- * @property Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $first_name
- * @property string|null $last_name
- * @property string|null $comment
- * @property string $code_gender
- * @property int $id_role
+ * Représente un utilisateur de l'application.
  * 
- * @property Gender $gender
- * @property Role $role
+ * @property int $id                  Identifiant unique de l'utilisateur.
+ * @property string $name             Nom d'affichage de l'utilisateur.
+ * @property string $email            Adresse e-mail de l'utilisateur.
+ * @property Carbon|null $email_verified_at Date de vérification de l'e-mail.
+ * @property string $password         Mot de passe de l'utilisateur (haché).
+ * @property string|null $remember_token Jeton pour se souvenir de l'utilisateur.
+ * @property Carbon|null $created_at  Date de création du compte.
+ * @property Carbon|null $updated_at  Date de la dernière mise à jour du compte.
+ * @property string|null $first_name   Prénom de l'utilisateur.
+ * @property string|null $last_name    Nom de famille de l'utilisateur.
+ * @property string|null $comment      Commentaire ou note sur l'utilisateur.
+ * @property int $id_role              Identifiant du rôle associé à l'utilisateur.
+ *
+ * @property Role $role                Relation avec le modèle Role pour obtenir le rôle.
  *
  * @package App\Models
  */
-#class User extends Model
 class User extends Authenticatable
 {
-	#protected $table = 'PFX_users';
+    use HasFactory, Notifiable; // Utilisation des traits HasFactory et Notifiable
 
-	
-	 // Méthode pour vérifier le rôle de l'utilisateur
-	 public function hasRole($role)
-	 {
-		 return $this->role === $role; // Assurez-vous que le champ `role` existe et contient le rôle de l'utilisateur
-	 }
+    // Les attributs qui peuvent être castés en types spécifiques
+    protected $casts = [
+        'email_verified_at' => 'datetime', // Cast pour la date de vérification d'e-mail
+        'id_role' => 'int'                  // Cast pour s'assurer que id_role est traité comme un entier
+    ];
 
+    // Les attributs cachés lors de la conversion en tableau ou JSON
+    protected $hidden = [
+        'password',          // Mot de passe (doit être caché)
+        'remember_token'     // Jeton pour se souvenir de l'utilisateur (doit être caché)
+    ];
 
-    use HasFactory, Notifiable;
+    // Les attributs qui peuvent être assignés en masse
+    protected $fillable = [
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'first_name',
+        'last_name',
+        'comment',
+        'id_role'
+    ];
 
-	protected $casts = [
-		'email_verified_at' => 'datetime',
-		'id_role' => 'int'
-	];
+    /**
+     * Relation avec le modèle Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'id_role'); // Lien avec le modèle Role par id_role
+    }
 
-	protected $hidden = [
-		'password',
-		'remember_token'
-	];
+    /**
+     * Vérifie si l'utilisateur a un rôle spécifique.
+     *
+     * @param string $role Le rôle à vérifier
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return $this->role->name === $role; // Vérifie si le nom du rôle correspond au rôle donné
+    }
 
-	protected $fillable = [
-		'name',
-		'email',
-		'email_verified_at',
-		'password',
-		'remember_token',
-		'first_name',
-		'last_name',
-		'comment',
-		'code_gender',
-		'id_role'
-	];
-
-	public function gender()
-	{
-		return $this->belongsTo(Gender::class, 'code_gender');
-	}
-
-	public function role()
-	{
-		return $this->belongsTo(Role::class, 'id_role');
-	}
-	protected function casts(): array
+    /**
+     * Définition des casts pour les attributs du modèle.
+     *
+     * @return array
+     */
+    protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime', // Cast pour la date d'email vérifié
+            'password' => 'hashed',             // Hachage du mot de passe lors de la récupération
         ];
     }
 }

@@ -7,66 +7,53 @@ use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
 {
-    // Afficher la liste des méthodes de paiement
     public function index()
     {
         $paymentMethods = PaymentMethod::all();
         return view('payment_methods.index', compact('paymentMethods'));
     }
 
-    // Afficher le formulaire de création d'une nouvelle méthode de paiement
     public function create()
     {
         return view('payment_methods.create');
     }
 
-    // Enregistrer une nouvelle méthode de paiement
     public function store(Request $request)
     {
-        // Valider les données
-        $validatedData = $request->validate([
-            'payment_type' => 'required|string|max:255',
+        $request->validate([
+            'payment_type' => 'required|string|max:50',
         ]);
 
-        // Créer la méthode de paiement
-        PaymentMethod::create($validatedData);
+        PaymentMethod::create($request->all());
 
-        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement ajoutée avec succès!');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement créée avec succès.');
     }
 
-    // Afficher les détails d'une méthode de paiement
-    public function show($id)
+    public function show(PaymentMethod $paymentMethod)
     {
-        $paymentMethod = PaymentMethod::findOrFail($id);
         return view('payment_methods.show', compact('paymentMethod'));
     }
 
-    // Afficher le formulaire d'édition d'une méthode de paiement
-    public function edit($id)
+    public function edit(PaymentMethod $paymentMethod)
     {
-        $paymentMethod = PaymentMethod::findOrFail($id);
         return view('payment_methods.edit', compact('paymentMethod'));
     }
 
-    // Mettre à jour une méthode de paiement
-    public function update(Request $request, $id)
+    public function update(Request $request, PaymentMethod $paymentMethod)
     {
-        // Valider les données
-        $validatedData = $request->validate([
-            'payment_type' => 'required|string|max:255',
+        $request->validate([
+            'payment_type' => 'required|string|max:50',
         ]);
 
-        // Mettre à jour la méthode de paiement
-        PaymentMethod::where('id_Paiement', $id)->update($validatedData);
+        $paymentMethod->update($request->all());
 
-        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement mise à jour avec succès!');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement mise à jour avec succès.');
     }
 
-    // Supprimer une méthode de paiement
-    public function destroy($id)
+    public function destroy(PaymentMethod $paymentMethod)
     {
-        PaymentMethod::destroy($id);
+        $paymentMethod->delete();
 
-        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement supprimée avec succès!');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement supprimée avec succès.');
     }
 }

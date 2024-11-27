@@ -2,25 +2,38 @@
 
 @section('content')
 <div class="container">
-    <h1>Order Details</h1>
-    <div class="mb-3">
-        <strong>ID:</strong> {{ $order->id }}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Détails de la commande</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID</dt>
+                        <dd class="col-sm-8">{{ $order->id }}</dd>
+
+                        <dt class="col-sm-4">Date de commande</dt>
+                        <dd class="col-sm-8">{{ $order->date_Commande }}</dd>
+
+                        <dt class="col-sm-4">Date de paiement</dt>
+                        <dd class="col-sm-8">{{ $order->date_Paiement ?? 'Non payé' }}</dd>
+
+                        <dt class="col-sm-4">Date de livraison</dt>
+                        <dd class="col-sm-8">{{ $order->date_Livraison ?? 'Non livré' }}</dd>
+                    </dl>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ route('orders.index') }}" class="btn btn-secondary me-md-2">Retour</a>
+                        <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning me-md-2">Modifier</a>
+                        <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <strong>Date Commande:</strong> {{ $order->date_Commande }}
-    </div>
-    <div class="mb-3">
-        <strong>Date Paiement:</strong> {{ $order->date_Paiement }}
-    </div>
-    <div class="mb-3">
-        <strong>Date Livraison:</strong> {{ $order->date_Livraison }}
-    </div>
-    <a href="{{ route('orders.index') }}" class="btn btn-secondary">Back to List</a>
-    <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning">Edit</a>
-    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-    </form>
 </div>
 @endsection

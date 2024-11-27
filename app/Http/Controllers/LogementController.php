@@ -2,63 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logement;
 use Illuminate\Http\Request;
 
 class LogementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $logements = Logement::all(); // Récupérer tous les logements
+        return view('logements.index', compact('logements'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('logements.create'); // Afficher le formulaire pour créer un nouveau logement
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code_logement' => 'required|string|max:255|unique:logements,code_logement', // Validation du code du logement
+            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
+        ]);
+
+        Logement::create($request->all()); // Créer un nouveau logement
+
+        return redirect()->route('logements.index')->with('success', 'Logement créé avec succès.'); // Redirection avec message de succès
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // public function show(Logement $logement)
+    // {
+    //     return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
+    // }
+
+    public function show(Logement $logement)
+{
+    dd($logement); // Cela affichera le logement récupéré
+    return view('logements.show', compact('logement'));
+}
+
+
+    public function edit(Logement $logement)
     {
-        //
+        return view('logements.edit', compact('logement')); // Afficher le formulaire pour éditer un logement
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Logement $logement)
     {
-        //
+        $request->validate([
+            'code_logement' => "required|string|max:255|unique:logements,code_logement,{$logement->id}", // Validation pour la mise à jour
+            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
+        ]);
+
+        $logement->update($request->all()); // Mettre à jour le logement
+
+        return redirect()->route('logements.index')->with('success', 'Logement mis à jour avec succès.'); // Redirection avec message de succès
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Logement $logement)
     {
-        //
-    }
+        $logement->delete(); // Supprimer le logement
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('logements.index')->with('success', 'Logement supprimé avec succès.'); // Redirection avec message de succès
     }
 }

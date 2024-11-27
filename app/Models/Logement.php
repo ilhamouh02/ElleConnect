@@ -1,41 +1,32 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Logement
  * 
- * @property string $id_Logement
- * @property int $nb_Lit
+ * Représente un logement dans l'application.
  * 
- * @property Collection|Prise[] $prises
+ * @property int $id                  Identifiant unique du logement.
+ * @property string $code_logement    Code du logement.
+ * @property int $nombre_lits         Nombre de lits dans le logement.
  *
  * @package App\Models
  */
 class Logement extends Model
 {
-	protected $table = 'Elle_logements';
-	protected $primaryKey = 'id_Logement';
-	public $incrementing = false;
-	public $timestamps = false;
+    use HasFactory;
 
-	protected $casts = [
-		'nb_Lit' => 'int'
-	];
+    protected $fillable = [
+        'code_logement', // Le code du logement est assignable en masse
+        'nombre_lits',   // Le nombre de lits est assignable en masse
+    ];
 
-	protected $fillable = [
-		'nb_Lit'
-	];
-
-	public function prises()
-	{
-		return $this->hasMany(Prise::class, 'id_Logement');
-	}
+    public function users()
+    {
+        return $this->hasMany(User::class, 'logement_id'); // Un logement peut avoir plusieurs utilisateurs
+    }
 }

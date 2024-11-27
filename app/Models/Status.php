@@ -23,7 +23,30 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Status extends Model
 {
-	use HasFactory;
+    use HasFactory;
+
+    protected $table = 'status';
+    protected $primaryKey = 'id_Status';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'demance_Valider',
+        'demand_en_cours',
+        'demande_Terminer',
+        'label'
+    ];
+
+    protected $casts = [
+        'demance_Valider' => 'boolean',
+        'demand_en_cours' => 'boolean',
+        'demande_Terminer' => 'boolean',
+    ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'id_Status', 'id_Status');
+    }
+}
 
 	// protected $table = 'Elle_status';
 	// protected $primaryKey = 'id_demande';
@@ -36,13 +59,7 @@ class Status extends Model
 	// 	'demande_Terminer' => 'bool'
 	// ];
 
-	protected $fillable = [
-        'id_Status',
-        'demance_Valider',
-        'demand_en_cours',
-        'demande_Terminer',
-        'label'
-    ];
+	
 	// public function orders()
 	// {
 	// 	return $this->hasMany(Order::class, 'id_Status');
@@ -51,4 +68,3 @@ class Status extends Model
 	// {
 	// 	return $this->hasMany(Order::class, 'id_demande');
 	// }
-}

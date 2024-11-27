@@ -1,49 +1,37 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Contenir
- * 
- * @property string $id_Produit
- * @property int $id_Commande
- * @property float $prix_Produit
- * @property string $nom_Produit
- * 
- * @property Product $product
- * @property Order $order
- *
- * @package App\Models
- */
 class Contenir extends Model
 {
-	protected $table = 'Elle_contenir';
-	public $incrementing = false;
-	public $timestamps = false;
+    use HasFactory;
 
-	protected $casts = [
-		'id_Commande' => 'int',
-		'prix_Produit' => 'float'
-	];
+    protected $table = 'Contenir'; // Assurez-vous que c'est le bon nom de table
+    protected $primaryKey = ['id_Produit', 'id_Commande'];
+    public $incrementing = false;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'prix_Produit',
-		'nom_Produit'
-	];
+    protected $fillable = [
+        'id_Produit',
+        'id_Commande',
+        'prix_Produit',
+        'nom_Produit'
+    ];
 
-	public function product()
-	{
-		return $this->belongsTo(Product::class, 'id_Produit');
-	}
+    protected $casts = [
+        'prix_Produit' => 'float',
+    ];
 
-	public function order()
-	{
-		return $this->belongsTo(Order::class, 'id_Commande');
-	}
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id_Produit', 'id_Produit');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'id_Commande', 'id_Commande');
+    }
 }
