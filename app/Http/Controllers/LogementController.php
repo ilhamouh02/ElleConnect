@@ -37,8 +37,7 @@ class LogementController extends Controller
 
     public function show(Logement $logement)
 {
-    dd($logement); // Cela affichera le logement récupéré
-    return view('logements.show', compact('logement'));
+    return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
 }
 
 
