@@ -65,8 +65,9 @@ class User extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo(Role::class, 'id_role'); // Lien avec le modèle Role par id_role
+        return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
+
 
     /**
      * Vérifie si l'utilisateur a un rôle spécifique.
@@ -76,7 +77,7 @@ class User extends Authenticatable
      */
     public function hasRole($role)
     {
-        return $this->role->name === $role; // Vérifie si le nom du rôle correspond au rôle donné
+        return $this->role && $this->role->label === $role;
     }
 
     /**

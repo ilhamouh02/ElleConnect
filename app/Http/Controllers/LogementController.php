@@ -7,61 +7,102 @@ use Illuminate\Http\Request;
 
 class LogementController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $logements = Logement::all(); // Récupérer tous les logements
+        // Récupérer tous les logements
+        $logements = Logement::all();
+
+        // Retourner la vue avec les logements
         return view('logements.index', compact('logements'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('logements.create'); // Afficher le formulaire pour créer un nouveau logement
+        return view('logements.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
+        // Validation des données
         $request->validate([
-            'code_logement' => 'required|string|max:255|unique:logements,code_logement', // Validation du code du logement
-            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
+            'nb_Lit' => 'required|integer|min:1', // Assurez-vous que le nombre de lits est valide
         ]);
 
-        Logement::create($request->all()); // Créer un nouveau logement
+        // Création d'un nouveau logement
+        Logement::create($request->all());
 
-        return redirect()->route('logements.index')->with('success', 'Logement créé avec succès.'); // Redirection avec message de succès
+        // Rediriger vers la liste des logements avec un message de succès
+        return redirect()->route('logements.index')->with('success', 'Logement créé avec succès.');
     }
 
-    // public function show(Logement $logement)
-    // {
-    //     return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
-    // }
-
-    public function show(Logement $logement)
-{
-    return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
-}
-
-
-    public function edit(Logement $logement)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        return view('logements.edit', compact('logement')); // Afficher le formulaire pour éditer un logement
+        // Trouver le logement par son ID
+        $logement = Logement::findOrFail($id);
+
+        // Retourner la vue de détail du logement
+        return view('logements.show', compact('logement'));
     }
 
-    public function update(Request $request, Logement $logement)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $request->validate([
-            'code_logement' => "required|string|max:255|unique:logements,code_logement,{$logement->id}", // Validation pour la mise à jour
-            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
+         // Trouver le logement par son ID
+         $logement = Logement::findOrFail($id);
+
+         // Retourner la vue d'édition avec les données du logement
+         return view('logements.edit', compact('logement'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+         // Validation des données
+         $request->validate([
+            'nb_Lit' => 'required|integer|min:1', // Assurez-vous que le nombre de lits est valide
+            // Note : Ne pas valider id_Logement ici car il ne doit pas changer lors de la mise à jour.
         ]);
 
-        $logement->update($request->all()); // Mettre à jour le logement
+        // Trouver le logement par son ID
+        $logement = Logement::findOrFail($id);
 
-        return redirect()->route('logements.index')->with('success', 'Logement mis à jour avec succès.'); // Redirection avec message de succès
+        // Mettre à jour les informations du logement
+        $logement->nb_Lit = $request->nb_Lit;
+        
+        $logement->save();
+
+        // Rediriger vers la liste des logements avec un message de succès
+        return redirect()->route('logements.index')->with('success', "Logement mis à jour avec succès.");
     }
 
-    public function destroy(Logement $logement)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        $logement->delete(); // Supprimer le logement
+         // Trouver le logement par son ID
+         $logement = Logement::findOrFail($id);
 
-        return redirect()->route('logements.index')->with('success', 'Logement supprimé avec succès.'); // Redirection avec message de succès
+         // Supprimer le logement
+         $logement->delete();
+
+         // Rediriger vers la liste des logements avec un message de succès
+         return redirect()->route('logements.index')->with('success', "Logement supprimé avec succès.");
     }
 }

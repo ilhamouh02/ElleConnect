@@ -1,21 +1,27 @@
-@extends ('layouts.app')
+@extends('layouts.app')
 
-@section ('content')
-<div class ="container ">
-<h2>Détails du Loge ment : {{ loge.code_logemnt }}</h2 >
+@section('content')
+<div class="container">
+    <h2>Détails du Logement</h2>
 
-<!-- Affichage des informations du logement -->
-<div class ="card ">
-<div  >{{ loge.code_logemnt }}</h5 >
-<p ><strong >Nombre de Lits:</strong > {{ loge.nombre_lits }}</p >
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">ID du Logement: {{ $logement->id_Logement }}</h5>
+            <p class="card-text">Nombre de Lits: {{ $logement->nb_Lit }}</p>
 
-<!-- Ajoutez d'autres informations si nécessaire -->
-< / div >
-< / div >
+            <!-- Actions -->
+            <a href="{{ route('logements.edit', $logement->id_Logement) }}" class="btn btn-warning">Modifier</a>
 
-<!-- Boutons d'action -->
-<a href ="{{ route (' loge.edit ', loge ) }}"  >Modifier </a >
-<a href ="{{ route (' loge.index ') }} ">Retour à la Liste </a >
+            <!-- Formulaire de suppression -->
+            <form action="{{ route('logements.destroy', $logement->id_Logement) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?')">Supprimer</button>
+            </form>
 
-< / div >
-< / section >
+            <!-- Retour à la liste -->
+            <a href="{{ route('logements.index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+</div>
+@endsection

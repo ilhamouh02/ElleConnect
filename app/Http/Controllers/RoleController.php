@@ -2,58 +2,92 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class RoleController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $roles = Role::all(); // Récupérer tous les rôles
+        // Récupérer tous les rôles
+        $roles = Role::all();
+
+        // Passer les rôles à la vue
         return view('roles.index', compact('roles'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('roles.create'); // Afficher le formulaire pour créer un nouveau rôle
+        return view('roles.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name', // Validation du nom du rôle
+            'id_role' => 'required|integer|unique:roles',
+            'label' => 'required|max:255',
         ]);
 
-        Role::create($request->all()); // Créer un nouveau rôle
+        Role::create($request->all());
 
-        return redirect()->route('roles.index')->with('success', 'Rôle créé avec succès.'); // Redirection avec message de succès
+        return redirect()->route('roles.index')
+            ->with('success', 'Rôle créé avec succès.');
     }
 
-    public function show(Role $role)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        return view('roles.show', compact('role')); // Afficher les détails d'un rôle spécifique
+        $role = Role::find($id);
+
+        return view('roles.show', compact('role'));
     }
 
-    public function edit(Role $role)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        return view('roles.edit', compact('role')); // Afficher le formulaire pour éditer un rôle
+        $role = Role::find($id);
+
+        return view('roles.edit', compact('role'));
     }
 
-    public function update(Request $request, Role $role)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => "required|string|max:255|unique:roles,name,{$role->id}", // Validation pour la mise à jour
+            'label' => 'required|max:255',
         ]);
 
-        $role->update($request->all()); // Mettre à jour le rôle
+        $role = Role::find($id);
+        $role->update($request->all());
 
-        return redirect()->route('roles.index')->with('success', 'Rôle mis à jour avec succès.'); // Redirection avec message de succès
+        return redirect()->route('roles.index')
+            ->with('success', 'Role updated successfully.');
     }
 
-    public function destroy(Role $role)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        $role->delete(); // Supprimer le rôle
+        $role = Role::find($id);
+        $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Rôle supprimé avec succès.'); // Redirection avec message de succès
+        return redirect()->route('roles.index')
+            ->with('success', 'Role deleted successfully');
     }
 }

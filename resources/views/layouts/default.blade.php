@@ -1,4 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElleConnect - @yield('title')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+    <div class="website">
+        <header class="header">
+            @include('includes.header')
+        </header>
+        <aside class="aside">
+            <nav class="navigation">
+                @include('includes.menu')
+            </nav>
+        </aside>
+
+        <main id="main" class="main">
+            @yield('content')
+        </main>
+
+        <footer class="footer">
+            @include('includes.footer')
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!doctype html>
  <html lang="fr">
 
  <head>
@@ -30,4 +92,4 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
  @include('includes.footer')
 </footer>
  </body>
- </html>
+ </html> -->
