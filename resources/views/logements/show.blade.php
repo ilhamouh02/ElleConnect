@@ -1,21 +1,14 @@
-@extends ('layouts.app')
+@extends('layouts.app')
 
-@section ('content')
-<div class ="container ">
-<h2>Détails du Loge ment : {{ loge.code_logemnt }}</h2 >
+@section('content')
+<div class="container">
+    <h2 class="text-center mb-4">Détails du Logement</h2>
 
-<!-- Affichage des informations du logement -->
-<div class ="card ">
-<div  >{{ loge.code_logemnt }}</h5 >
-<p ><strong >Nombre de Lits:</strong > {{ loge.nombre_lits }}</p >
-
-<!-- Ajoutez d'autres informations si nécessaire -->
-< / div >
-< / div >
-
-<!-- Boutons d'action -->
-<a href ="{{ route (' loge.edit ', loge ) }}"  >Modifier </a >
-<a href ="{{ route (' loge.index ') }} ">Retour à la Liste </a >
-
-< / div >
-< / section >
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">ID Logement: {{ $logement->id_Logement }}</h5>
+            <p class="card-text">Nombre de Lits: {{ $logement->nb_Lit }}</p>
+        </div>
+    </div>
+</div>
+@endsection

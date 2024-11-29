@@ -2,41 +2,19 @@
 
 @section('content')
 <div class="container">
-<h2>Liste des Logements</h2>
-<a href="{{ route('logements.create') }}" class="btn btn-primary mb-3">Ajouter un Logement</a>
+    <h2 class="text-center mb-4">Ajouter un Logement</h2>
 
-<table class="table">
-<thead>
-<tr>
-<th>ID</th>
-<th>Code Logement</th>
-<th>Nombre de Lits</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody>
-@foreach($logements as $logement)
-<tr>
-<td>{{ $logement->id }}</td>
-<td>{{ $logement->code_logement }}</td>
-<td>{{ $logement->nombre_lits }}</td>
-<td>
-<a href="{{ route('logements.show', $logement) }}" class="btn btn-info btn-sm">Voir</a>
-<a href="{{ route('logements.edit', $logement) }}" class="btn btn-warning btn-sm">Modifier</a>
-<form action="{{ route('logements.destroy', $logement) }}" method="POST" style="display: inline-block;">
-@csrf 
-@method('DELETE')
-<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?')">Supprimer</button> 
-</form> 
-</td> 
-</tr> 
-@endforeach 
-</tbody> 
-</table>
-
-@if($logements->isEmpty())
-<p>Aucun logement trouvé.</p> 
-@endif 
-
-</div> 
-@endsection 
+    <form action="{{ route('logements.store') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="id_Logement">ID Logement</label>
+            <input type="text" class="form-control" id="id_Logement" name="id_Logement" required>
+        </div>
+        <div class="form-group">
+            <label for="nb_Lit">Nombre de Lits</label>
+            <input type="number" class="form-control" id="nb_Lit" name="nb_Lit" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+@endsection

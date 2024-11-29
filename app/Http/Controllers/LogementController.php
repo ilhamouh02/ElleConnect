@@ -9,59 +9,48 @@ class LogementController extends Controller
 {
     public function index()
     {
-        $logements = Logement::all(); // Récupérer tous les logements
+        $logements = Logement::all();
         return view('logements.index', compact('logements'));
     }
 
     public function create()
     {
-        return view('logements.create'); // Afficher le formulaire pour créer un nouveau logement
+        return view('logements.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'code_logement' => 'required|string|max:255|unique:logements,code_logement', // Validation du code du logement
-            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
-        ]);
-
-        Logement::create($request->all()); // Créer un nouveau logement
-
-        return redirect()->route('logements.index')->with('success', 'Logement créé avec succès.'); // Redirection avec message de succès
+        $logement = new Logement();
+        $logement->id_Logement = $request->input('id_Logement');
+        $logement->nb_Lit = $request->input('nb_Lit');
+        $logement->save();
+        return redirect()->route('logements.index');
     }
 
-    // public function show(Logement $logement)
-    // {
-    //     return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
-    // }
-
-    public function show(Logement $logement)
-{
-    return view('logements.show', compact('logement')); // Afficher les détails d'un logement spécifique
-}
-
-
-    public function edit(Logement $logement)
+    public function show($id_Logement)
     {
-        return view('logements.edit', compact('logement')); // Afficher le formulaire pour éditer un logement
+        $logement = Logement::findOrFail($id_Logement);
+        return view('logements.show', compact('logement'));
     }
 
-    public function update(Request $request, Logement $logement)
+    public function edit($id_Logement)
     {
-        $request->validate([
-            'code_logement' => "required|string|max:255|unique:logements,code_logement,{$logement->id}", // Validation pour la mise à jour
-            'nombre_lits' => 'required|integer|min:1', // Validation du nombre de lits
-        ]);
-
-        $logement->update($request->all()); // Mettre à jour le logement
-
-        return redirect()->route('logements.index')->with('success', 'Logement mis à jour avec succès.'); // Redirection avec message de succès
+        $logement = Logement::findOrFail($id_Logement);
+        return view('logements.edit', compact('logement'));
     }
 
-    public function destroy(Logement $logement)
+    public function update(Request $request, $id_Logement)
     {
-        $logement->delete(); // Supprimer le logement
+        $logement = Logement::findOrFail($id_Logement);
+        $logement->nb_Lit = $request->input('nb_Lit');
+        $logement->save();
+        return redirect()->route('logements.index');
+    }
 
-        return redirect()->route('logements.index')->with('success', 'Logement supprimé avec succès.'); // Redirection avec message de succès
+    public function destroy($id_Logement)
+    {
+        $logement = Logement::findOrFail($id_Logement);
+        $logement->delete();
+        return redirect()->route('logements.index');
     }
 }
