@@ -9,14 +9,14 @@ class UserController extends Controller
 {
     public function index()
     {
-        // Récupérer tous les utilisateurs avec leur rôle
-        $users = User::with('role')->get(); // Supprimé 'gender'
+        $users = User::with('role')->get();
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -28,7 +28,7 @@ class UserController extends Controller
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'comment' => 'nullable|string',
-            'id_role' => 'required|integer'
+            'id_role' => 'required|integer|exists:roles,id',
         ]);
 
         User::create([
@@ -51,7 +51,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -63,16 +64,16 @@ class UserController extends Controller
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'comment' => 'nullable|string',
-            'id_role' => 'required|integer'
+            'id_role' => 'required|integer|exists:roles,id',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
-        
+
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
         }
-        
+
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->comment = $request->comment;
@@ -85,7 +86,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        // Optionnel : Vous pouvez ajouter une vérification pour s'assurer que l'utilisateur ne peut pas se supprimer lui-même
         if ($user->id === auth()->id()) {
             return redirect()->route('users.index')->with('error', "Vous ne pouvez pas supprimer votre propre compte.");
         }
@@ -94,4 +94,4 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', "Utilisateur supprimé avec succès.");
     }
-}
+}   

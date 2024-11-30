@@ -23,8 +23,13 @@ class Role extends Model
         'name', // Le nom du rôle est assignable en masse
     ];
 
+
     public function users()
     {
-        return $this->hasMany(User::class, 'id_role'); // Un rôle peut avoir plusieurs utilisateurs
+        return $this->hasMany(User::class, 'id_role');
     }
+   // public function users()
+    //{
+      //  return $this->hasMany(User::class, 'id_role'); // Un rôle peut avoir plusieurs utilisateurs
+    //}
 }
