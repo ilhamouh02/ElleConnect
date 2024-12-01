@@ -66,6 +66,8 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role', 'id_role');
+       // return $this->belongsTo(Role::class);
+        //return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
 
 
@@ -79,6 +81,11 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->label === $role;
     }
+    public function hasAnyRole(array $roles)
+{
+    return in_array($this->role->label, $roles);
+}
+
 
     /**
      * Définition des casts pour les attributs du modèle.

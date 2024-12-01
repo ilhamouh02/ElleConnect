@@ -2,63 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\PaymentMethod; // Assurez-vous que le modèle PaymentMethod existe et est correctement défini.
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class PaymentMethodController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $paymentMethods = PaymentMethod::all(); // Récupère toutes les méthodes de paiement.
+        return view('payment_methods.index', compact('paymentMethods')); // Retourne la vue avec les méthodes de paiement.
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('products.create');
+        return view('payment_methods.create'); // Affiche le formulaire de création pour les méthodes de paiement.
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'id_Produit' => 'required|string|max:100|unique:products', // Assurez-vous que c'est le bon nom de table ici.
-            'prix_Produit' => 'required|numeric',
-            'visible' => 'required|boolean',
-            'prise' => 'required|boolean',
+            'id_Paiement' => 'required|string|max:100|unique:Elle_payment_methods,id_Paiement', // Validation pour id_Paiement.
+            'payment_type' => 'required|string|max:255', // Validation pour payment_type.
         ]);
 
-        Product::create($request->all());
+        // Crée une nouvelle méthode de paiement avec les données validées.
+        PaymentMethod::create($request->only(['id_Paiement', 'payment_type']));
 
-        return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement créée avec succès.');
     }
 
-    public function show(Product $product)
+    /**
+     * Display the specified resource.
+     */
+    public function show(PaymentMethod $paymentMethod)
     {
-        return view('products.show', compact('product'));
+        return view('payment_methods.show', compact('paymentMethod')); // Retourne les détails de la méthode de paiement.
     }
 
-    public function edit(Product $product)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(PaymentMethod $paymentMethod)
     {
-        return view('products.edit', compact('product'));
+        return view('payment_methods.edit', compact('paymentMethod')); // Affiche le formulaire d'édition de la méthode de paiement.
     }
 
-    public function update(Request $request, Product $product)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, PaymentMethod $paymentMethod)
     {
         $request->validate([
-            'prix_Produit' => 'required|numeric',
-            'visible' => 'required|boolean',
-            'prise' => 'required|boolean',
+            'payment_type' => 'required|string|max:255', // Validation pour payment_type lors de la mise à jour.
         ]);
 
-        $product->update($request->all());
+        // Met à jour la méthode de paiement avec les nouvelles données.
+        $paymentMethod->update($request->only(['payment_type']));
 
-        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement mise à jour avec succès.');
     }
 
-    public function destroy(Product $product)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(PaymentMethod $paymentMethod)
     {
-        $product->delete();
+        $paymentMethod->delete(); // Supprime la méthode de paiement.
 
-        return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
+        return redirect()->route('payment_methods.index')->with('success', 'Méthode de paiement supprimée avec succès.');
     }
 }

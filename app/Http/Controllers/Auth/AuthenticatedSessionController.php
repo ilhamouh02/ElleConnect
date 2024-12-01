@@ -24,11 +24,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Appeler la méthode d'authentification définie dans LoginRequest
         $request->authenticate();
 
+        // Régénérer la session après une connexion réussie
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('dashboard'));
     }
 
     /**
@@ -36,10 +38,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // Déconnexion de l'utilisateur
         Auth::guard('web')->logout();
 
+        // Invalider la session actuelle
         $request->session()->invalidate();
 
+        // Régénérer le token CSRF pour des raisons de sécurité
         $request->session()->regenerateToken();
 
         return redirect('/');
