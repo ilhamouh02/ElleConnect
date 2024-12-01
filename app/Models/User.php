@@ -63,30 +63,22 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-   // public function role()
-   // {
-     //   return $this->belongsTo(Role::class, 'id_role'); // Lien avec le modèle Role par id_role
-   // }
-
-   public function role()
+    public function role()
     {
-        return $this->belongsTo(Role::class, 'id_role');
+        return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
 
-    public function hasRole($role)
-    {
-        return $this->role->name === $role;
-    }
+
     /**
      * Vérifie si l'utilisateur a un rôle spécifique.
      *
      * @param string $role Le rôle à vérifier
      * @return bool
      */
-    //public function hasRole($role)
-    // {
-     //   return $this->role->name === $role; // Vérifie si le nom du rôle correspond au rôle donné
-    //}
+    public function hasRole($role)
+    {
+        return $this->role && $this->role->label === $role;
+    }
 
     /**
      * Définition des casts pour les attributs du modèle.

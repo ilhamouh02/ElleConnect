@@ -2,31 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * Class Logement
- * 
- * Représente un logement dans l'application.
- * 
- * @property int $id                  Identifiant unique du logement.
- * @property string $code_logement    Code du logement.
- * @property int $nombre_lits         Nombre de lits dans le logement.
- *
- * @package App\Models
- */
 class Logement extends Model
 {
     use HasFactory;
 
+    // Spécifiez le nom de la table si différent de la convention Laravel
+   # protected $table = 'Elle_logements';
+
+    // Spécifiez la clé primaire si elle n'est pas 'id'
+    protected $primaryKey = 'id_Logement';
+
+    // Indiquez si la clé primaire est auto-incrémentée
+    public $incrementing = true;
+
+    // Désactivez les timestamps si la table ne les contient pas
+    public $timestamps = false;
+
+    // Les attributs qui peuvent être assignés en masse
     protected $fillable = [
-        'code_logement', // Le code du logement est assignable en masse
-        'nombre_lits',   // Le nombre de lits est assignable en masse
+        'nb_Lit',
+        // Ajoutez d'autres champs si nécessaire
     ];
 
+    /**
+     * Relation avec le modèle User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function users()
     {
-        return $this->hasMany(User::class, 'logement_id'); // Un logement peut avoir plusieurs utilisateurs
+        return $this->hasMany(User::class, 'id_Logement'); // Un logement peut avoir plusieurs utilisateurs
     }
 }

@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 /**
  * Class Product
@@ -22,16 +17,18 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-
- class Product extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    #protected $table = 'Products';
+    // Si le nom de la table est 'products', il n'est pas nécessaire de le spécifier
+    // Laravel l'utilise par défaut.
+    #protected $table = 'products'; // Assurez-vous que c'est bien le bon nom de table.
+
     protected $primaryKey = 'id_Produit';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    public $timestamps = false;
+    public $incrementing = false; // Le champ 'id_Produit' n'est pas un auto-incrément
+    protected $keyType = 'string'; // Le type de la clé primaire est 'string'
+    public $timestamps = false; // Vous n'utilisez pas de timestamps automatiques
 
     protected $fillable = [
         'id_Produit',
