@@ -2,63 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\PaymentMethod;
 
-class ProductController extends Controller
+class PaymentMethodController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $paymentMethods = PaymentMethod::all(); // Récupère tous les enregistrements
+    return view('payment_methods.index', compact('paymentMethods'));
+    //     $paymentMethods = PaymentMethod::all();
+    //     return view('payment_methods.index', compact('paymentMethods'));
+    
+    // $paymentMethods = DB::table('payment_methods')->get(); // Vérifie si id_Paiement est récupéré correctement
+    // return view('payment_methods.index', compact('paymentMethods'));
     }
 
     public function create()
     {
-        return view('products.create');
+        return view('payment_methods.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_Produit' => 'required|string|max:100|unique:products', // Assurez-vous que c'est le bon nom de table ici.
-            'prix_Produit' => 'required|numeric',
-            'visible' => 'required|boolean',
-            'prise' => 'required|boolean',
+            'id_Paiement' => 'required|string|unique:payment_methods',
+            'payment_type' => 'required|max:255',
         ]);
 
-        Product::create($request->all());
+        PaymentMethod::create($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
+        return redirect()->route('payment_methods.index')
+            ->with('success', 'Méthode de paiement créée avec succès.');
     }
 
-    public function show(Product $product)
+    public function show(string $id)
     {
-        return view('products.show', compact('product'));
+        $paymentMethod = PaymentMethod::find($id);
+        return view('payment_methods.show', compact('paymentMethod'));
     }
 
-    public function edit(Product $product)
+    public function edit(string $id)
     {
-        return view('products.edit', compact('product'));
+        $paymentMethod = PaymentMethod::find($id);
+        return view('payment_methods.edit', compact('paymentMethod'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'prix_Produit' => 'required|numeric',
-            'visible' => 'required|boolean',
-            'prise' => 'required|boolean',
+            'payment_type' => 'required|max:255',
         ]);
 
-        $product->update($request->all());
+        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod->update($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
+        return redirect()->route('payment_methods.index')
+            ->with('success', 'Méthode de paiement mise à jour avec succès.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        $product->delete();
+        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod->delete();
 
-        return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
+        return redirect()->route('payment_methods.index')
+            ->with('success', 'Méthode de paiement supprimée avec succès');
     }
 }

@@ -26,6 +26,9 @@ Route::get('/about', function () {
     return View::make('pages.about');
     });
 
+    Route::get('/payment_methods/{payment_method}', [PaymentMethodController::class, 'show'])->name('payment_methods.show');
+
+
 //Route::get('/status', [StatusController::class, 'index'])->name('status.index');  
 
 // Routes pour les ressources (CRUD)

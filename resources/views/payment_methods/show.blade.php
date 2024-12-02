@@ -1,22 +1,19 @@
-<!-- resources/views/payment_methods/show.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h1>Détails de la Méthode de Paiement</h1>
-
-    <p><strong>ID:</strong> {{ $paymentMethod->id_Paiement }}</p>
-    <p><strong>Type de Paiement:</strong> {{ $paymentMethod->payment_type }}</p>
-
-    <a href="{{ route('payment_methods.edit', $paymentMethod->id_Paiement) }}" class="btn btn-warning">Modifier</a>
-    
-    <form action="{{ route('payment_methods.destroy', $paymentMethod->id_Paiement) }}" method="POST" style="display:inline;">
+    <h2>Détails de la Méthode de Paiement</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">ID de la Méthode de Paiement: {{ $paymentMethod->id_Paiement }}</h5>
+            <p class="card-text">Type de Paiement: {{ $paymentMethod->payment_type }}</p>
+        </div>
+    </div>
+    <a href="{{ route('payment_methods.edit', $paymentMethod->id_Paiement) }}" class="btn btn-warning mt-3">Modifier</a>
+    <form action="{{ route('payment_methods.destroy', $paymentMethod->id_Paiement) }}" method="POST" style="display: inline-block;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette méthode de paiement ?')">Supprimer</button>
     </form>
-
-    <a href="{{ route('payment_methods.index') }}" class="btn btn-secondary">Retour à la Liste</a>
 </div>
 @endsection
