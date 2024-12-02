@@ -70,6 +70,10 @@ class User extends Authenticatable
         //return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
 
+    public function isComptable()
+    {
+        return $this->hasRole('Comptable');
+    }
 
     /**
      * Vérifie si l'utilisateur a un rôle spécifique.
