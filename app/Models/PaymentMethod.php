@@ -13,7 +13,7 @@ class PaymentMethod extends Model
     protected $primaryKey = 'id_Paiement';
     public $incrementing = false;
     protected $keyType = 'string';
-    #public $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'id_Paiement',

@@ -27,18 +27,17 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-<<<<<<< HEAD
-    Route::get('/payment_methods/{payment_method}', [PaymentMethodController::class, 'show'])->name('payment_methods.show');
+ 
+//Route::get('/payment_methods/{payment_method}', [PaymentMethodController::class, 'show'])->name('payment_methods.show');
 
 
 //Route::get('/status', [StatusController::class, 'index'])->name('status.index');  
-=======
+
 // Tableau de bord (accessible uniquement aux utilisateurs authentifiés)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
->>>>>>> 3efa5ca49edaf7603383c5dfb3c3861213f0f0af
 
     // Gestion du profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -2,38 +2,43 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="mb-0">Détails de la commande</h2>
-                </div>
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">ID</dt>
-                        <dd class="col-sm-8">{{ $order->id }}</dd>
-
-                        <dt class="col-sm-4">Date de commande</dt>
-                        <dd class="col-sm-8">{{ $order->date_Commande }}</dd>
-
-                        <dt class="col-sm-4">Date de paiement</dt>
-                        <dd class="col-sm-8">{{ $order->date_Paiement ?? 'Non payé' }}</dd>
-
-                        <dt class="col-sm-4">Date de livraison</dt>
-                        <dd class="col-sm-8">{{ $order->date_Livraison ?? 'Non livré' }}</dd>
-                    </dl>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="{{ route('orders.index') }}" class="btn btn-secondary me-md-2">Retour</a>
-                        <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning me-md-2">Modifier</a>
-                        <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')">Supprimer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <h1>Détails de la Commande #{{ $order->id_Commande }}</h1>
+    
+    <div class="mb-3">
+        <strong>Date de Commande :</strong> {{ $order->date_Commande->format('d/m/Y') }}
     </div>
+    <div class="mb-3">
+        <strong>Date de Paiement :</strong> {{ $order->date_Paiement ? $order->date_Paiement->format('d/m/Y') : 'Non spécifié' }}
+    </div>
+    <div class="mb-3">
+        <strong>Date de Livraison :</strong> {{ $order->date_Livraison ? $order->date_Livraison->format('d/m/Y') : 'Non spécifié' }}
+    </div>
+    <div class="mb-3">
+        <strong>ID Connexion :</strong> {{ $order->id_Connexion }}
+    </div>
+    <div class="mb-3">
+        <strong>Mot de Passe Connexion :</strong> {{ $order->password_Connexion }}
+    </div>
+    <div class="mb-3">
+        <strong>Statut :</strong> {{ $order->status ? $order->status->nom : 'Non spécifié' }}
+    </div>
+    <div class="mb-3">
+        <strong>Méthode de Paiement :</strong> {{ $order->paymentMethod ? $order->paymentMethod->payment_type : 'Non spécifiée' }}
+    </div>
+    <div class="mb-3">
+        <strong>Prise :</strong> {{ $order->prise ? $order->prise->nom : 'Non spécifiée' }}
+    </div>
+    <div class="mb-3">
+        <strong>Utilisateur :</strong> {{ $order->user ? $order->user->nom : 'Non spécifié' }}
+    </div>
+
+    <a href="{{ route('orders.index') }}" class="btn btn-secondary">Retour à la Liste</a>
+    <a href="{{ route('orders.edit', $order->id_Commande) }}" class="btn btn-warning">Modifier</a>
+
+    <form action="{{ route('orders.destroy', $order->id_Commande) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
 </div>
 @endsection

@@ -15,15 +15,17 @@
         <tbody>
         @foreach($paymentMethods as $method)
 <tr>
-    <td>{{ $method->id_Paiement  }}</td>
+    <td>{{ $method->id_Paiement }}</td>
     <td>{{ $method->payment_type }}</td>
+    @if($method->id_Paiement) <!-- Vérifie si id_Paiement est valide -->
     <td>
-        {{ var_dump($method) }}
-        <a href="{{ route('payment_methods.show', $method->id_Paiement ?? 'null') }}" class="btn btn-info btn-sm">Voir</a>
-        <a href="{{ route('payment_methods.edit', $method->id_Paiement ?? 'null') }}" class="btn btn-warning btn-sm">Modifier</a>
+        <a href="{{ route('payment_methods.show', $method->id_Paiement) }}" class="btn btn-info btn-sm">Voir</a>
+        <a href="{{ route('payment_methods.edit', $method->id_Paiement) }}" class="btn btn-warning btn-sm">Modifier</a>
     </td>
+    @endif
 </tr>
 @endforeach
+
 
 
         </tbody>
