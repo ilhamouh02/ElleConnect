@@ -16,6 +16,19 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+
+        
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <select class="block mt-1 w-full" name="role" required>
+                @foreach(App\Models\Role::all()->pluck('label', 'id_role') as $value => $text)
+                    <option value="{{ $value }}" {{ old('role') == $value ? 'selected' : '' }}>{{ $text }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

@@ -1,9 +1,18 @@
-<x-app-layout>
-    <x-slot name="header">
+@extends('layouts.app')
+    @section('header')
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
+
+
         </h2>
-    </x-slot>
+    @endsection
+    @section('content')
+
+    @if(auth()->user()->isComptable())
+        
+        
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ea suscipit voluptatum ipsum temporibus quaerat eos provident natus nesciunt, nihil enim architecto sequi vero corporis culpa, possimus aspernatur repudiandae omnis cum obcaecati a quam? Odio eligendi officiis voluptatem ratione, aspernatur iste repudiandae veritatis voluptates nesciunt, dolorum itaque quia aliquam! Praesentium.</p>
+    @endif
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -14,4 +23,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+    @endsection
+

@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
     $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+        'role' => ['required'],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
@@ -44,7 +45,7 @@ class RegisteredUserController extends Controller
     ]);
 
     // Assigner un rôle à l'utilisateur (par exemple, "student")
-    $role = \App\Models\Role::where('label', 'student')->first(); // Rechercher le rôle "student"
+    $role = \App\Models\Role::where('id_role', $request->get('role'))->first(); // Rechercher le rôle "student"
     $user->id_role = $role->id_role; // Attribuer le rôle à l'utilisateur
     $user->save();
 

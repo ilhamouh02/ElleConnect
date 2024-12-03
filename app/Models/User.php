@@ -70,6 +70,31 @@ class User extends Authenticatable
         //return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
 
+    public function isComptable()
+    {
+        return $this->hasRole('Comptable');
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('Admin');
+    }
+
+    public function isUser()
+    {
+        return $this->hasRole('User');
+    }
+    
+    public function isTechnicien()
+    {
+        return $this->hasRole('Technicien réseau');
+    }
+
+    public function isResponsable()
+    {
+        return $this->hasRole('Responsable de résidence');
+    }
+    
 
     /**
      * Vérifie si l'utilisateur a un rôle spécifique.
