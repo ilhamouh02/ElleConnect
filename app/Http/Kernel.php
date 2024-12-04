@@ -7,20 +7,16 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
     /**
-     * Les paramètres de middleware globaux.
-     *
-     * Ces middleware sont chargés pour toutes les requêtes de l'application.
+     * Middleware global appliqué à chaque requête.
      *
      * @var array
      */
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Http\Middleware\CheckForMaintenanceMode::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
@@ -28,13 +24,8 @@ class Kernel extends HttpKernel
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ];
 
-
-    
-
     /**
-     * Les paramètres de middleware des groupes de routes.
-     *
-     * Ces middleware sont affectés à des groupes de routes spécifiques.
+     * Groupes de middleware pour les routes.
      *
      * @var array
      */
@@ -55,9 +46,7 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * Les paramètres de middleware spécifiques aux routes.
-     *
-     * Ces middleware sont affectés à des routes spécifiques ou des groupes de routes.
+     * Middleware spécifiques aux routes.
      *
      * @var array
      */
@@ -70,8 +59,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // Ajouter votre middleware personnalisé pour les rôles ici
-        
+        // Middleware personnalisé pour les rôles
         'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

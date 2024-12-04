@@ -39,8 +39,9 @@ use Illuminate\Database\Eloquent\Model;
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_Commande';
-    public $timestamps = false;
+    #protected $table = 'Elle_orders'; // Nom de la table
+    protected $primaryKey = 'id_Commande'; // Clé primaire
+    public $timestamps = false; // Pas de timestamps pour cette table
 
     protected $fillable = [
         'date_Commande',
@@ -48,15 +49,16 @@ use Illuminate\Database\Eloquent\Model;
         'date_Livraison',
         'id_Connexion',
         'password_Connexion',
-        'id_Status',
+        'id_demande',
         'id_Paiement',
         'id_utilisateur',
         'id_Prise'
     ];
 
+    // Définir les relations
     public function status()
     {
-        return $this->belongsTo(Status::class, 'id_Status', 'id_Status');
+        return $this->belongsTo(Status::class, 'id_demande', 'id_demande');
     }
 
     public function paymentMethod()

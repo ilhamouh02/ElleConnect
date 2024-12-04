@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Collection;
 
 class Role extends Model
 {
     use HasFactory;
 
-    #protected $table = 'Roles';
+    // Si vous avez spécifié un nom de table personnalisé, vous pouvez le décommenter.
+    // protected $table = 'Roles';
+
     protected $primaryKey = 'id_role';
     public $timestamps = false;
 
@@ -19,14 +20,9 @@ class Role extends Model
         'label'
     ];
 
-
+    // Relation avec le modèle User
     public function users()
     {
         return $this->hasMany(User::class, 'id_role', 'id_role');
-        //return $this->hasMany(User::class, 'id_role');
     }
-   // public function users()
-    //{
-      //  return $this->hasMany(User::class, 'id_role'); // Un rôle peut avoir plusieurs utilisateurs
-    //}
 }

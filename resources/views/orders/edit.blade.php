@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Modifier la Commande #{{ $order->id_Commande }}</h1>
-    
+
     <form action="{{ route('orders.update', $order->id_Commande) }}" method="POST">
         @csrf
         @method('PUT')

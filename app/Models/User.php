@@ -66,9 +66,9 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role', 'id_role');
-       // return $this->belongsTo(Role::class);
-        //return $this->belongsTo(Role::class, 'id_role', 'id_role');
     }
+
+
 
     public function isComptable()
     {
@@ -102,26 +102,17 @@ class User extends Authenticatable
      * @param string $role Le rôle à vérifier
      * @return bool
      */
+    // Vérifie si l'utilisateur a un rôle spécifique
     public function hasRole($role)
     {
         return $this->role && $this->role->label === $role;
     }
+
+    // Vérifie si l'utilisateur a un des rôles spécifiés
     public function hasAnyRole(array $roles)
-{
-    return in_array($this->role->label, $roles);
-}
-
-
-    /**
-     * Définition des casts pour les attributs du modèle.
-     *
-     * @return array
-     */
-    protected function casts(): array
     {
-        return [
-            'email_verified_at' => 'datetime', // Cast pour la date d'email vérifié
-            'password' => 'hashed',             // Hachage du mot de passe lors de la récupération
-        ];
+        return $this->role && in_array($this->role->label, $roles);
     }
+  
+
 }
