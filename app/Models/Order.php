@@ -51,8 +51,20 @@ use Illuminate\Database\Eloquent\Model;
         'password_Connexion',
         'id_demande',
         'id_Paiement',
-        'id_utilisateur',
-        'id_Prise'
+        'id_Prise',
+        'id_utilisateur'
+    ];
+
+    protected $casts = [
+        'date_Commande' => 'datetime',
+        'date_Paiement' => 'datetime',
+        'date_Livraison' => 'datetime',
+    ];
+
+    protected $dates = [
+        'date_Commande',
+        'date_Paiement',
+        'date_Livraison',
     ];
 
     // Définir les relations
@@ -68,7 +80,7 @@ use Illuminate\Database\Eloquent\Model;
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_utilisateur', 'id_utilisateur');
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
     public function prise()

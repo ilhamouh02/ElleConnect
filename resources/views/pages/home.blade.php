@@ -1,19 +1,12 @@
-@extends('layouts.default')
-
-@section('title', 'Accueil')
+@extends('layouts.app')
 
 @section('header')
-    Accueil
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{ __('Accueil') }}
+    </h2>
 @endsection
 
 @section('content')
-    <div class="bg-white p-6 rounded shadow">
-        <h2 class="text-xl font-semibold">Bienvenue sur ElleConnect</h2>
-        <p class="mt-4">
-            Simplifiez la gestion de votre accès Internet au Campus la Futaie.
-        </p>
-        <p class="mt-2">
-            Inscrivez-vous, choisissez un câble réseau et profitez d'une connexion stable et abordable.
-        </p>
-    </div>
+    <h2>Bienvenue sur la page d'accueil du site</h2>
+    <p>Cette application gère l'accès Internet pour les étudiants de la résidence "Campus la Futaie".</p>
 @endsection

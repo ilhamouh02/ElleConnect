@@ -94,6 +94,11 @@ class User extends Authenticatable
     {
         return $this->hasRole('Responsable de résidence');
     }
+
+    public function isEtudiant()
+    {
+        return $this->hasRole('Etudiant  de résidence');
+    }
     
 
     /**
