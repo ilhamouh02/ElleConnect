@@ -1,16 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Liste des Commandes</h1>
-    <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Ajouter une Commande</a>
+    <h1>Liste des commandes</h1>
+    <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Ajouter une commande</a>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Date Commande</th>
-                <th>Date Paiement</th>
-                <th>Date Livraison</th>
+                <th>Date de commande</th>
+                <th>Date de paiement</th>
+                <th>Date de livraison</th>
                 <th>Connexion</th>
                 <th>Actions</th>
             </tr>
@@ -36,5 +35,4 @@
             @endforeach
         </tbody>
     </table>
-</div>
 @endsection

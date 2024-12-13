@@ -1,120 +1,473 @@
-div{
-    color :blue;
-}
-/* Police et marges globales */
-body {
-    font-family: 'Open Sans', sans-serif;
+/* Styles généraux */
+body  {
+    font-family: 'Poppins', sans-serif !important;
+    background: linear-gradient(to bottom, #f3e8ff, #e9d5ff) !important;
+    color: #4a154b !important;  /* Texte en mauve foncé */
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: #f0f4f8;
 }
 
-/* Hero Section */
-.hero {
-    background: linear-gradient(135deg, #0066ff, #00ccff);
+/* Barre latérale */
+.sidebar {
+    background-color: #7c3aed !important; /* Mauve vif */
+    color: white;
+    width: 250px;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #d8b4fe; /* Mauve clair */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar ul li a:hover {
+    color: white; /* Texte blanc au survol */
+}
+
+/* Contenu principal */
+.main-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.main-content h1 {
+    color: #6b21a8; /* Mauve profond */
+}
+
+/* Boutons */
+button {
+    background-color: #9333ea; /* Mauve vif */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #6b21a8; /* Mauve plus sombre au survol */
+}
+
+/* En-tête */
+header {
+    background-color: #7c3aed; /* Mauve vif */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Pied de page */
+footer {
+    background-color: #4a154b; /* Mauve foncé */
     color: white;
     text-align: center;
-    padding: 50px 20px;
+    padding: 10px 20px;
 }
 
-/* Navbar */
+/* Cartes ou blocs de contenu */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    color: #7c3aed; /* Mauve vif */
+}
+
+.card p {
+    color: #4a154b; /* Texte en mauve foncé */
+}
+
+/* Liens globaux */
+a {
+    color: #9333ea; /* Mauve vif pour les liens */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Transitions douces pour tous les éléments interactifs */
+button, a, .card:hover {
+    transition: all 0.3s ease-in-out;
+}
+/* Styles pour les tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #ffffff; /* Fond blanc */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    border-radius: 8px; /* Coins arrondis */
+    overflow: hidden;
+}
+
+/* En-têtes de table */
+table thead {
+    background-color: #7c3aed; /* Mauve vif */
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+table thead th {
+    padding: 12px 15px;
+    font-size: 1rem;
+}
+
+/* Lignes de table */
+table tbody tr {
+    border-bottom: 1px solid #e5e7eb; /* Ligne grise claire */
+    transition: background-color 0.3s ease-in-out;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f3e8ff; /* Légère alternance de couleur (mauve pâle) */
+}
+
+table tbody tr:hover {
+    background-color: #f9f5ff; /* Fond plus clair au survol */
+}
+
+/* Cellules de table */
+table tbody td {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    color: #4a154b; /* Texte mauve foncé */
+}
+
+/* Liens ou boutons dans la table */
+table tbody td a, table tbody td button {
+    color: #9333ea; /* Mauve vif */
+    text-decoration: none;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+table tbody td a:hover, table tbody td button:hover {
+    color: #6b21a8; /* Mauve plus sombre au survol */
+}
+
+/* Bordures des tables pour les petits écrans */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none; /* Masque les en-têtes */
+    }
+
+    tbody tr {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 2px solid #7c3aed; /* Ajoute une ligne de séparation plus visible */
+    }
+
+    tbody td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    tbody td::before {
+        content: attr(data-label); /* Ajoute un label pour chaque cellule */
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: #7c3aed; /* Couleur mauve vif */
+    }
+}
+/* Boutons de menu */
+.menu-button {
+    display: inline-block;
+    background-color: #7c3aed; /* Mauve vif */
+    color: white; /* Texte blanc */
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px; /* Coins arrondis */
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.menu-button:hover {
+    background-color: #6b21a8; /* Mauve plus sombre */
+    transform: scale(1.05); /* Légère mise en avant au survol */
+}
+
+.menu-button:active {
+    background-color: #5b1d89; /* Encore plus sombre quand cliqué */
+    transform: scale(0.98); /* Réduit légèrement à l'activation */
+}
+
+/* Icônes dans les boutons */
+.menu-button i {
+    margin-right: 8px; /* Espacement entre l'icône et le texte */
+    font-size: 1.2rem; /* Taille des icônes */
+    vertical-align: middle;
+}
+
+/* Liens de navigation */
+.nav-link {
+    display: block;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: #9333ea; /* Mauve vif */
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: #e9d5ff; /* Fond mauve clair */
+    color: #4a154b; /* Texte plus sombre */
+}
+
+/* Boutons arrondis pour actions spécifiques */
+.action-button {
+    background-color: #9333ea; /* Mauve vif */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50px; /* Boutons arrondis */
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.action-button:hover {
+    background-color: #6b21a8; /* Mauve plus sombre */
+    transform: translateY(-2px); /* Léger effet de "décollage" */
+}
+
+.action-button:active {
+    transform: translateY(0); /* Revenir à la normale lors du clic */
+    background-color: #5b1d89; /* Couleur plus sombre */
+}
+
+/* Barre de navigation */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #7c3aed; /* Mauve vif */
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+    color: #d8b4fe; /* Mauve clair */
+}
+
+/* Bouton pour les actions principales */
+.primary-button {
+    background-color: #9333ea; /* Mauve vif */
+    color: white;
     padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border: 2px solid #9333ea;
+    transition: all 0.3s ease-in-out;
 }
 
-.navbar .logo img {
-    height: 50px;
+.primary-button:hover {
+    background-color: transparent; /* Fond transparent */
+    color: #9333ea; /* Texte mauve vif */
+    border-color: #9333ea; /* Garde la bordure */
 }
 
+/* Style pour les listes déroulantes de menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff; /* Fond blanc */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Ombre subtile */
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block; /* Affiche le contenu au survol */
+}
+
+.dropdown-content a {
+    color: #4a154b; /* Texte mauve foncé */
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown-content a:hover {
+    background-color: #f3e8ff; /* Mauve clair au survol */
+}
+/* Menu de navigation principal */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7c3aed; /* Mauve vif */
+    padding: 15px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    position: sticky; /* Fixe en haut de la page */
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white; /* Texte blanc */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+    color: #d8b4fe; /* Mauve clair */
+}
+
+/* Logo ou titre dans le menu */
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar .logo:hover {
+    color: #e9d5ff; /* Mauve clair */
+}
+
+/* Menu horizontal */
 .navbar .menu {
     display: flex;
+    align-items: center;
+}
+
+.navbar .menu li {
     list-style: none;
-    gap: 20px;
+    margin: 0 10px;
 }
 
 .navbar .menu li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Hero Content */
-.hero-content h1 {
-    font-size: 3rem;
-    margin: 20px 0;
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.search-bar input {
-    padding: 10px;
-    width: 300px;
+    padding: 8px 15px;
     border-radius: 5px;
-    border: none;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.search-bar button {
-    background-color: #0044cc;
+.navbar .menu li a:hover {
+    background-color: #6b21a8; /* Mauve foncé */
+    color: white;
+}
+
+/* Bouton d'appel à l'action dans le menu */
+.navbar .menu .action-button {
+    background-color: #9333ea; /* Mauve vif */
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar .menu .action-button:hover {
+    background-color: #6b21a8; /* Mauve plus sombre */
+}
+
+/* Menu mobile (par défaut caché) */
+.navbar .menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
     cursor: pointer;
 }
 
-/* Cards Section */
-.cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px;
-}
+/* Menu réactif */
+@media (max-width: 768px) {
+    .navbar .menu {
+        display: none; /* Cache le menu en mode mobile */
+        flex-direction: column;
+        background-color: #7c3aed; /* Fond mauve vif */
+        position: absolute;
+        top: 100%; /* Juste en dessous de la barre de navigation */
+        left: 0;
+        right: 0;
+        padding: 15px 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-.card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
+    .navbar .menu.active {
+        display: flex; /* Affiche le menu quand activé */
+    }
 
-.card h3 {
-    color: #0044cc;
-    margin-bottom: 10px;
-}
+    .navbar .menu li {
+        margin: 10px 0; /* Espacement vertical entre les éléments */
+    }
 
-.card p {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.card .badge {
-    background-color: #00ccff;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-}
-
-.card .learn-more {
-    background-color: #0044cc;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    .navbar .menu-toggle {
+        display: block; /* Bouton hamburger visible */
+    }
 }

@@ -11,9 +11,9 @@ class PaymentMethod extends Model
 
     #protected $table = 'Elle_payment_methods';
     protected $primaryKey = 'id_Paiement';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    public $timestamps = false;
+public $incrementing = false;
+protected $keyType = 'string';
+
 
     protected $fillable = [
         'id_Paiement',

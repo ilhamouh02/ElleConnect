@@ -33,7 +33,7 @@ class Status extends Model
         'demance_Valider',
         'demand_en_cours',
         'demande_Terminer',
-        'label'
+        'label',
     ];
 
     protected $casts = [
@@ -48,23 +48,4 @@ class Status extends Model
     }
 }
 
-	// protected $table = 'Elle_status';
-	// protected $primaryKey = 'id_demande';
-	// public $incrementing = false;
-	// public $timestamps = false;
-
-	// protected $casts = [
-	// 	'demance_Valider' => 'bool',
-	// 	'demand_en_cours' => 'bool',
-	// 	'demande_Terminer' => 'bool'
-	// ];
-
 	
-	// public function orders()
-	// {
-	// 	return $this->hasMany(Order::class, 'id_Status');
-	// }
-	// public function orders()
-	// {
-	// 	return $this->hasMany(Order::class, 'id_demande');
-	// }

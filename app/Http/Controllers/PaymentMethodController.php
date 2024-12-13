@@ -15,15 +15,14 @@ class PaymentMethodController extends Controller
 
     public function create()
     {
-        PaymentMethod::create($request->all());
-       // return view('payment_methods.create');
+        return view('payment_methods.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_Paiement' => 'required|string|unique:payment_methods',
-            'payment_type' => 'required|max:255',
+            'id_Paiement' => 'required|string|unique:payment_methods,id_Paiement',
+            'payment_type' => 'required|max:50',
         ]);
 
         PaymentMethod::create($request->all());
@@ -34,23 +33,23 @@ class PaymentMethodController extends Controller
 
     public function show(string $id)
     {
-        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::findOrFail($id);
         return view('payment_methods.show', compact('paymentMethod'));
     }
 
     public function edit(string $id)
     {
-        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::findOrFail($id);
         return view('payment_methods.edit', compact('paymentMethod'));
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'payment_type' => 'required|max:255',
+            'payment_type' => 'required|max:50',
         ]);
 
-        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::findOrFail($id);
         $paymentMethod->update($request->all());
 
         return redirect()->route('payment_methods.index')
@@ -59,10 +58,10 @@ class PaymentMethodController extends Controller
 
     public function destroy(string $id)
     {
-        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::findOrFail($id);
         $paymentMethod->delete();
 
         return redirect()->route('payment_methods.index')
-            ->with('success', 'Méthode de paiement supprimée avec succès');
+            ->with('success', 'Méthode de paiement supprimée avec succès.');
     }
 }

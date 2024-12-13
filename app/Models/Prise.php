@@ -28,7 +28,8 @@ class Prise extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'id_Logement'
+		'id_Prise',
+        'id_Logement',
 	];
 
 	public function logement()

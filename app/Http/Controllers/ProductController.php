@@ -38,21 +38,26 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-    {
-        // Valider les données de la requête
-        $request->validate([
-            'id_Produit' => 'required|string|max:100|unique:products', // Assurez-vous que la table est 'products' (en minuscule)
-            'prix_Produit' => 'required|numeric', // Le prix doit être un nombre
-            'visible' => 'required|boolean', // Visible doit être un booléen
-            'prise' => 'required|boolean', // Prise doit être un booléen
-        ]);
+{
+    // Valider les données de la requête
+    $request->validate([
+        'id_Produit' => 'required|string',
+        'prix_Produit' => 'required|numeric',
+        'visible' => 'nullable|boolean',
+        'prise' => 'nullable|boolean',
+    ]);
 
-        // Créer un produit avec les données validées
-        Product::create($request->all());
+    // Créer un nouveau produit
+    $product = new Product();
+    $product->id_Produit = $request->input('id_Produit');
+    $product->prix_Produit = $request->input('prix_Produit');
+    $product->visible = $request->has('visible') ? true : false;
+    $product->prise = $request->has('prise') ? true : false;
+    $product->save();
 
-        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-        return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
-    }
+    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+    return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
+}
 
     /**
      * Afficher les détails d'un produit spécifique.
@@ -86,20 +91,25 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Product $product)
-    {
-        // Valider les données de la requête
-        $request->validate([
-            'prix_Produit' => 'required|numeric', // Le prix doit être un nombre
-            'visible' => 'required|boolean', // Visible doit être un booléen
-            'prise' => 'required|boolean', // Prise doit être un booléen
-        ]);
+{
+    // Valider les données de la requête
+    $request->validate([
+        'prix_Produit' => 'required|numeric', // Le prix doit être un nombre
+    ]);
 
-        // Mettre à jour le produit avec les nouvelles données
-        $product->update($request->all());
+    // Exclure les champs _token et _method de la mise à jour
+    $data = $request->except(['_token', '_method']);
 
-        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
-    }
+    // Définir les valeurs des champs visible et prise
+    $data['visible'] = $request->has('visible') ? true : false;
+    $data['prise'] = $request->has('prise') ? true : false;
+
+    // Mettre à jour le produit avec l'ID spécifique
+    $product->update($data);
+
+    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+    return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
+}
 
     /**
      * Supprimer un produit spécifique de la base de données.
@@ -108,11 +118,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
-    {
-        // Supprimer le produit
-        $product->delete();
+{
+    // Supprimer le produit avec l'ID spécifique
+    Product::where('id_Produit', $product->id_Produit)->delete();
 
-        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-        return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
-    }
+    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+    return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
+}
 }

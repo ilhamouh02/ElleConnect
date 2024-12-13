@@ -49,7 +49,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class); // Gestion des rôles
     Route::resource('logements', LogementController::class); // Gestion des logements
-    Route::resource('payment_methods', PaymentMethodController::class); // Méthodes de paiement
+    #Route::get('payment_methods', function(){dd("test");});
+
+    Route::resource('payment_methods', PaymentMethodController::class);
+    #Route::resource('payment_methods', PaymentMethodController::class); // Méthodes de paiement
     Route::resource('prises', PriseController::class); // Gestion des prises
     Route::resource('products', ProductController::class); // Gestion des produits
     Route::resource('users', UserController::class); // Gestion des utilisateurs
