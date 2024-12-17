@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+/**
+ * Contrôleur pour gérer les produits.
+ */
 class ProductController extends Controller
 {
     /**
@@ -38,26 +41,26 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-{
-    // Valider les données de la requête
-    $request->validate([
-        'id_Produit' => 'required|string',
-        'prix_Produit' => 'required|numeric',
-        'visible' => 'nullable|boolean',
-        'prise' => 'nullable|boolean',
-    ]);
+    {
+        // Valider les données de la requête
+        $request->validate([
+            'id_Produit' => 'required|string', // Identifiant du produit requis et chaîne de caractères
+            'prix_Produit' => 'required|numeric', // Prix du produit requis et numérique
+            'visible' => 'nullable|boolean', // Visibilité du produit optionnelle et booléenne
+            'prise' => 'nullable|boolean', // Prise du produit optionnelle et booléenne
+        ]);
 
-    // Créer un nouveau produit
-    $product = new Product();
-    $product->id_Produit = $request->input('id_Produit');
-    $product->prix_Produit = $request->input('prix_Produit');
-    $product->visible = $request->has('visible') ? true : false;
-    $product->prise = $request->has('prise') ? true : false;
-    $product->save();
+        // Créer un nouveau produit
+        $product = new Product();
+        $product->id_Produit = $request->input('id_Produit');
+        $product->prix_Produit = $request->input('prix_Produit');
+        $product->visible = $request->has('visible') ? true : false; // Définir la visibilité selon la présence du champ dans la requête
+        $product->prise = $request->has('prise') ? true : false; // Définir la prise selon la présence du champ dans la requête
+        $product->save();
 
-    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-    return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
-}
+        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+        return redirect()->route('products.index')->with('success', 'Produit créé avec succès.');
+    }
 
     /**
      * Afficher les détails d'un produit spécifique.
@@ -91,25 +94,25 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Product $product)
-{
-    // Valider les données de la requête
-    $request->validate([
-        'prix_Produit' => 'required|numeric', // Le prix doit être un nombre
-    ]);
+    {
+        // Valider les données de la requête
+        $request->validate([
+            'prix_Produit' => 'required|numeric', // Le prix doit être un nombre
+        ]);
 
-    // Exclure les champs _token et _method de la mise à jour
-    $data = $request->except(['_token', '_method']);
+        // Exclure les champs _token et _method de la mise à jour
+        $data = $request->except(['_token', '_method']);
 
-    // Définir les valeurs des champs visible et prise
-    $data['visible'] = $request->has('visible') ? true : false;
-    $data['prise'] = $request->has('prise') ? true : false;
+        // Définir les valeurs des champs visible et prise
+        $data['visible'] = $request->has('visible') ? true : false; // Définir la visibilité selon la présence du champ dans la requête
+        $data['prise'] = $request->has('prise') ? true : false; // Définir la prise selon la présence du champ dans la requête
 
-    // Mettre à jour le produit avec l'ID spécifique
-    $product->update($data);
+        // Mettre à jour le produit avec l'ID spécifique
+        $product->update($data);
 
-    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-    return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
-}
+        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
+    }
 
     /**
      * Supprimer un produit spécifique de la base de données.
@@ -118,11 +121,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
-{
-    // Supprimer le produit avec l'ID spécifique
-    Product::where('id_Produit', $product->id_Produit)->delete();
+    {
+        // Supprimer le produit avec l'ID spécifique
+        Product::where('id_Produit', $product->id_Produit)->delete();
 
-    // Rediriger l'utilisateur vers la liste des produits avec un message de succès
-    return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
-}
+        // Rediriger l'utilisateur vers la liste des produits avec un message de succès
+        return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès.');
+    }
 }
