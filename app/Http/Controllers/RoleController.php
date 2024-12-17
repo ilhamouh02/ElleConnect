@@ -27,7 +27,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // Renvoyer la vue de création sans passer de données
+        if (!$this->isAdmin()) {
+            return redirect()->route('roles.index')->with('error', 'Accès refusé. Seuls les administrateurs peuvent effectuer cette action.');
+        }
+
         return view('roles.create');
     }
 

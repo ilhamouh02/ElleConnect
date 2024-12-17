@@ -1,8 +1,15 @@
-/* Importer Elle.css si nécessaire */
-@import './Elle.css';
+
+
+@import './Elle.css'; 
 
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('./Elle.css');
+ */
+
 

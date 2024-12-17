@@ -19,13 +19,12 @@
                 <li><a href="{{ route('roles.index') }}" class="text-blue-600 hover:underline">Rôles</a></li>
                 <li><a href="{{ route('users.index') }}" class="text-blue-600 hover:underline">Utilisateurs</a></li>
                 <li><a href="{{ route('logements.index') }}" class="text-blue-600 hover:underline">Logements</a></li>
-                <!--<li><a href="{{ route('payment_methods.index') }}" class="text-blue-600 hover:underline">Méthodes de Paiement</a></li> -->
                 <li><a href="{{ route('products.index') }}" class="text-blue-600 hover:underline">Produits</a></li>
                 <li><a href="{{ route('orders.index') }}" class="text-blue-600 hover:underline">Commandes</a></li> 
-                <!--<li><a href="{{ route('statuses.index') }}" class="text-blue-600 hover:underline">Statuts</a></li> -->
             
             @elseif(Auth::user()->isEtudiant())
-                <!-- Liens disponibles pour les étudiants -->
+                <!-- Liens disponibles uniquement pour les étudiants -->
+                <li><a href="{{ route('roles.index') }}" class="text-blue-600 hover:underline">Rôles</a></li>
                 <li><a href="{{ route('orders.index') }}" class="text-blue-600 hover:underline">Mes Commandes</a></li>
                 <li><a href="{{ route('profile.edit') }}" class="text-blue-600 hover:underline">Mon Profil</a></li>
             
@@ -36,11 +35,11 @@
             @elseif(Auth::user()->isComptable())
                 <!-- Liens disponibles pour les comptables -->
                 <li><a href="/comptable/paiements" class="text-blue-600 hover:underline">Gestion des Paiements</a></li>
-                <!--<li><a href="{{ route('payment_methods.index') }}" class="text-blue-600 hover:underline">Méthodes de Paiement</a></li> -->
 
             @elseif(Auth::user()->isResponsable())
-               <!-- <li><a href="/responsable/abonnements" class="text-blue-600 hover:underline">Gestion des Abonnements</a></li> -->
-                
+               <!-- Liens disponibles pour les responsables -->
+               <!-- Ajoutez ici des liens spécifiques aux responsables si nécessaire -->
+
             @endif
         @endauth
     </ul>

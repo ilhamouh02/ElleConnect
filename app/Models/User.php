@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         // Prénom de l'utilisateur
-        'nom',
+        'name',
         // Nom de famille de l'utilisateur
         'prenom',
         // Adresse e-mail de l'utilisateur
@@ -184,6 +184,12 @@ class User extends Authenticatable
     public function isEtudiant()
     {
         // Utilise la méthode hasRole pour vérifier le rôle 'Etudiant de résidence'
-        return $this->hasRole('Etudiant de résidence');
+        //
+       
+        return $this->id_role === Role::where('label', 'Etudiant')->first()->id_role;
+       
+        //return $this->hasRole('Etudiant de résidence');
     }
+
+
 }

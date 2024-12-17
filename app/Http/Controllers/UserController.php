@@ -47,9 +47,12 @@ class UserController extends Controller
             'first_name' => 'nullable|string|max:255', // Prénom optionnel et maximum 255 caractères
             'last_name' => 'nullable|string|max:255', // Nom de famille optionnel et maximum 255 caractères
             'comment' => 'nullable|string', // Commentaire optionnel
-            'id_role' => 'required|integer', // Identifiant du rôle requis et entier
+            //'id_role' => 'required|integer', // Identifiant du rôle requis et entier
         ]);
 
+
+        $defaultRole = Role::where('label', 'Etudiant')->first();
+        
         // Crée un nouvel utilisateur avec les données validées
         User::create([
             'name' => $request->name,
@@ -58,9 +61,12 @@ class UserController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'comment' => $request->comment,
-            'id_role' => $request->id_role,
+            'id_role' => $defaultRole->id_role ?? null,        
         ]);
 
+        // Connexion automatique
+        Auth::login($user);
+        
         // Redirige vers la liste des utilisateurs avec un message de succès
         return redirect()->route('users.index')->with('success', 'Utilisateur créé avec succès.');
     }

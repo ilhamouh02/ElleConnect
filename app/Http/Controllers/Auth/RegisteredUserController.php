@@ -29,30 +29,37 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-        'role' => ['required'],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    ]);
+    {
+        // Valider les données de la requête
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            // Supprimez la validation pour le rôle ici
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
-    // Création de l'utilisateur
-    $user = User::create([
-        'name' => $request->name,
-        'email' => strtolower($request->email),
-        'password' => Hash::make($request->password),
-    ]);
+        // Création de l'utilisateur
+        $user = User::create([
+            'name' => $request->name,
+            'email' => strtolower($request->email),
+            'password' => Hash::make($request->password),
+        ]);
 
-    // Assigner un rôle à l'utilisateur (par exemple, "student")
-    $role = \App\Models\Role::where('id_role', $request->get('role'))->first(); // Rechercher le rôle "student"
-    $user->id_role = $role->id_role; // Attribuer le rôle à l'utilisateur
-    $user->save();
+        // Assigner le rôle "Étudiant" par défaut
+        
+        $defaultRole = Role::where('label', 'Etudiant')->first(); // Assurez-vous que le label correspond à votre base de données
+        if ($defaultRole) {
+            $user->id_role = $defaultRole->id_role; // Attribuer le rôle à l'utilisateur
+        } else {
+            // Gérer le cas où le rôle "Étudiant" n'existe pas
+            return redirect()->back()->withErrors(['role' => 'Le rôle "Étudiant" n\'existe pas.']);
+        }
+        
+        $user->save();
 
-    // Connexion automatique de l'utilisateur
-    Auth::login($user);
+        // Connexion automatique de l'utilisateur
+        Auth::login($user);
 
-    return redirect(route('dashboard'));
-}
-
+        return redirect(route('dashboard'));
+    }
 }

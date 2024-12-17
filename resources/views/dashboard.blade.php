@@ -11,8 +11,8 @@
     @if(auth()->user()->isComptable())
         
         
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt ea suscipit voluptatum ipsum temporibus quaerat eos provident natus nesciunt, nihil enim architecto sequi vero corporis culpa, possimus aspernatur repudiandae omnis cum obcaecati a quam? Odio eligendi officiis voluptatem ratione, aspernatur iste repudiandae veritatis voluptates nesciunt, dolorum itaque quia aliquam! Praesentium.</p>
-    @endif
+    <p> lyly </p>
+          @endif
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
